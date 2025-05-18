@@ -1,17 +1,27 @@
 function calculateBMI() {
   const weight = parseFloat(document.getElementById('weight').value);
-  const heightCm = parseFloat(document.getElementById('height').value);
+  const height = parseFloat(document.getElementById('height').value);
+  const unit = document.querySelector('input[name="unit"]:checked').value;
 
-  if (!weight || !heightCm || weight <= 0 || heightCm <= 0) {
+  if (!weight || !height || weight <= 0 || height <= 0) {
     document.getElementById('bmiResult').textContent = 'Please enter valid values.';
     return;
   }
 
-  const heightM = heightCm / 100;
-  const bmi = weight / (heightM * heightM);
-  const roundedBMI = bmi.toFixed(2);
+  let bmi;
+  if (unit === 'metric') {
+    const heightM = height / 100;
+    bmi = weight / (heightM * heightM);
+  } else {
+    // Convert to metric
+    const weightKg = weight * 0.453592;
+    const heightM = (height * 2.54) / 100;
+    bmi = weightKg / (heightM * heightM);
+  }
 
+  const roundedBMI = bmi.toFixed(2);
   let status = '';
+
   if (bmi < 18.5) {
     status = 'Underweight';
   } else if (bmi < 25) {
