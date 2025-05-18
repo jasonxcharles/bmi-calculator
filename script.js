@@ -13,7 +13,6 @@ function calculateBMI() {
     const heightM = height / 100;
     bmi = weight / (heightM * heightM);
   } else {
-    // Convert to metric
     const weightKg = weight * 0.453592;
     const heightM = (height * 2.54) / 100;
     bmi = weightKg / (heightM * heightM);
