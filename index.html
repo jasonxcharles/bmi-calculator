@@ -4,26 +4,105 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BMI Calculator</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      max-width: 400px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .img-container {
+      margin-top: 15px;
+    }
+    .img-container img {
+      width: 100px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>BMI Calculator</h1>
-    <label for="weight">Weight (kg):</label>
-    <input type="number" id="weight" placeholder="Enter weight in kg" />
+    <h1>BMI Calculator (US Units)</h1>
+    <label for="weight">Weight (lbs):</label>
+    <input type="number" id="weight" placeholder="Enter weight in pounds" />
 
-    <label for="height">Height (cm):</label>
-    <input type="number" id="height" placeholder="Enter height in cm" />
+    <label for="height">Height (inches):</label>
+    <input type="number" id="height" placeholder="Enter height in inches" />
 
     <button onclick="calculateBMI()">Calculate BMI</button>
 
     <div class="result" id="bmiResult"></div>
 
     <div class="img-container">
-      <img src="images/bmi-icon.png" alt="BMI icon" />
+      <img src="https://cdn-icons-png.flaticon.com/512/4253/4253260.png" alt="BMI icon" />
     </div>
   </div>
 
-  <script src="js/script.js"></script>
+  <script>
+    function calculateBMI() {
+      const weightLbs = parseFloat(document.getElementById('weight').value);
+      const heightInches = parseFloat(document.getElementById('height').value);
+
+      if (!weightLbs || !heightInches || weightLbs <= 0 || heightInches <= 0) {
+        document.getElementById('bmiResult').textContent = 'Please enter valid values.';
+        return;
+      }
+
+      const bmi = (703 * weightLbs) / (heightInches * heightInches);
+      const roundedBMI = bmi.toFixed(2);
+
+      let status = '';
+      if (bmi < 18.5) {
+        status = 'Underweight';
+      } else if (bmi < 25) {
+        status = 'Normal weight';
+      } else if (bmi < 30) {
+        status = 'Overweight';
+      } else {
+        status = 'Obese';
+      }
+
+      document.getElementById('bmiResult').textContent = `Your BMI is ${roundedBMI} (${status})`;
+    }
+  </script>
 </body>
 </html>
